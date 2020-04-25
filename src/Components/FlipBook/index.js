@@ -16,20 +16,18 @@ class FlipBook extends React.PureComponent {
         scroll: 0,
     }
 
-    backSlide = (page, screenX) => {
-        if (this.screen.start > screenX)
-            return
-        page.style.transform = `rotateY(0deg)`
-        page.style.zIndex = this.props.children.length - +page.id
-        this.setState({ currentPage: this.state.currentPage - 1 })
+    backSlide = (page) => {
+        if (page) {
+            page.style.transform = `rotateY(0deg)`
+            page.style.zIndex = this.props.children.length - +page.id
+        }
     }
 
-    forvardSlide = (page, screenX) => {
-        // if (this.screen.start < screenX)
-        //     return
-        page.style.transform = `rotateY(-180deg)`
-        page.style.zIndex = (this.props.children.length - +page.id) + page.id * 2
-        this.setState({ currentPage: this.state.currentPage + 1 })
+    forvardSlide = (page) => {
+        if (page) {
+            page.style.transform = `rotateY(-180deg)`
+            page.style.zIndex = (this.props.children.length - +page.id) + page.id * 2
+        }
     }
 
     slide = (e, screenX) => {
@@ -44,6 +42,26 @@ class FlipBook extends React.PureComponent {
             this.backSlide(page, screenX)
         }
         this.setState({ windowHeight: window.innerHeight })
+    }
+
+    forvard = async (index, currentPage) => {
+        const i = index + 1
+        if (i > currentPage) {
+            return
+        }
+        await new Promise(resolve => setTimeout(resolve, 200))
+        this.forvardSlide(this[`page_${i - 1}`])
+        this.forvard(i, currentPage)
+    }
+
+    back = async (index, currentPage) => {
+        const i = index - 1
+        if (i < currentPage) {
+            return
+        }
+        await new Promise(resolve => setTimeout(resolve, 200))
+        this.backSlide(this[`page_${i}`])
+        this.back(i, currentPage)
     }
 
     // dragLeft = (page, screenX) => {
@@ -95,12 +113,10 @@ class FlipBook extends React.PureComponent {
 
     listenToScroll = () => {
         this.setState({ windowHeight: document.documentElement.scrollHeight })
-        
+
     }
 
     componentDidMount() {
-        this.containerRef.addEventListener('mouseup', this.onMouseUp)
-        this.containerRef.addEventListener('touchend', this.onMouseUp, { passive: true })
         window.addEventListener('scroll', this.listenToScroll)
     }
 
@@ -108,20 +124,31 @@ class FlipBook extends React.PureComponent {
         window.removeEventListener('scroll', this.listenToScroll)
     }
 
+    componentDidUpdate(prevProps) {
+        const { currentPage } = this.props
+        console.log(currentPage)
+        if (prevProps.currentPage < currentPage) {
+            this.forvard(prevProps.currentPage, currentPage)
+        }
+        else {
+            this.back(prevProps.currentPage, currentPage)
+        }
+    }
+
     render() {
         const { windowWidth, windowHeight, pages } = this.state
         const { children, max, next, previous, currentPage } = this.props
-
         return (
-            <div 
+            <div
+                className='book-container'
                 ref={container => this.containerRef = container}
                 style={{
                     width: windowWidth,
                     height: windowHeight
                 }}
             >
-                {currentPage > 0 && <button className="button-prev btn" onClick={previous}> &#60; </button>}
-                {currentPage !== max && <button className="button-next btn" onClick={next}> &#62; </button>}
+                {<button className="button-prev btn" onClick={() => currentPage > 0 && previous()}> &#60; </button>}
+                {<button className="button-next btn" onClick={() => currentPage < children.length && next()}> &#62; </button>}
                 {
                     children.map((item, index) => {
                         return React.cloneElement(item, {
@@ -130,10 +157,9 @@ class FlipBook extends React.PureComponent {
                             next: this.next,
                             onMouseDown: this.onMouseDown,
                             onTouchStart: this.onMouseDown,
+                            ref: (page) => this[`page_${index}`] = page,
                             style: {
                                 zIndex: children.length - index,
-                                display: currentPage === index ? 'block' : 'none',
-                                // left: windowWidth / 2
                             }
                         })
                     })

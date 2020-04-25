@@ -3,12 +3,12 @@
     width: 100%;
     height: 100%;
     perspective: 2200px;
-    // overflow: hidden;
+    overflow: hidden;
 
     .page {
         width: 100%;
         height: 100%;
-        // padding-bottom: 20px;
+        overflow: scroll;
         position: absolute;
         transform-style: preserve-3d;
         transform-origin: left center;
@@ -22,7 +22,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        transition: .5s ease-in;
+        transition: 1s ease-in;
         div {
             transform-style: preserve-3d;
             backface-visibility: hidden;
@@ -35,13 +35,11 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            pointer-events: none;
         }
         .back-side {
             position: absolute;
             width: 100%;
             height: 100%;
-            pointer-events: none;
             transform: rotateY(-180deg);
         }
     }

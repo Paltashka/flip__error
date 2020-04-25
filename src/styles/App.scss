@@ -163,16 +163,16 @@ html, body, #root {
 
 .btn {
   position: fixed;
-  top: 50%;
+  top: 50vh;
   z-index: 999;
   background-color: white;
   border: 1px solid black;
 }
 
 .button-next {
-  right: 0;
+  right: 20;
 }
 
 .button-prev {
-
+  left: 20;
 } 
