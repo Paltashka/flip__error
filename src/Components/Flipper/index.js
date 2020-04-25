@@ -12,32 +12,32 @@ import mood from '../../images/mood.png';
 
 class Flipper extends Component {
 
-	constructor(props) {
-			super(props)
-			this.totalPages = 4
-			this.state = {
-					selected: 0,
-			}
-			this.handleSelectedChange = this.handleSelectedChange.bind(this)
-			this.previous = this.previous.bind(this)
-			this.next = this.next.bind(this)
-	}
+	// constructor(props) {
+	// 		super(props)
+	// 		this.totalPages = 4
+	// 		this.state = {
+	// 				selected: 0,
+	// 		}
+	// 		this.handleSelectedChange = this.handleSelectedChange.bind(this)
+	// 		this.previous = this.previous.bind(this)
+	// 		this.next = this.next.bind(this)
+	// }
 
 	handleSelectedChange(selected) {
 			this.setState({selected})
 	}
 
-	previous() {
-			this.setState(state => ({
-					selected: state.selected - 1
-			}))
-	}
+	// previous() {
+	// 		this.setState(state => ({
+	// 				selected: state.selected - 1
+	// 		}))
+	// }
 
-	next(index) {
-			this.setState(state => ({
-					selected: state.selected + index
-			}))
-	}
+	// next(index) {
+	// 		this.setState(state => ({
+	// 				selected: state.selected + index
+	// 		}))
+	// }
 
 	render() {
 		const { info, banner, lang, categories, products } = this.props;
@@ -67,25 +67,28 @@ class Flipper extends Component {
 	items = items
 			.map(m=>({...m,sort_index:getSortIndex(m.id)}))
 			.sort((a,b)=>a.sort_index-b.sort_index);
+	items.unshift('da');
 
 			return (
 					<div className="App">
-						 <FlipBook>
-						 		<div className="page" style={{ backgroundColor: 'white' }}>
-									<div className="front-side" style={{ overflow: 'hidden' }}>
-										<MenuStart lang={lang} next={this.next} info={info} banner={banner} categories={categories} /> 
-									</div>
-									{/* <div className="back-side" style={{ overflow: 'hidden' }}>
-											<div></div>
-									</div> */}
-								</div>
+						 <FlipBook max={items.length-1}>
 								{items.map((item, index, arr) => { 
+									if (index === 0 ) {
+										return (
+											<div className="page" style={{ backgroundColor: 'white' }} key={'start'}>
+											<div className="front-side">
+												<MenuStart lang={lang} info={info} banner={banner} categories={categories} /> 
+											</div>
+									</div>
+										);
+									}
+
 									return (
 										<div className="page" key={item.id} >
-											<div className="front-side" style={{ overflow: 'hidden' }}>
+											<div className="front-side">
 												<img src={mood} alt="banner" />
 												<MenuNavigator 
-													prev={index === 0 ? 'Home' : arr[index-1].name}
+													prev={index === 1 ? 'Home' : arr[index-1].name}
 													name={item.name}
 													next={index === arr.length - 1 ? '' : arr[index+1].name} />
 												<Products
@@ -96,9 +99,6 @@ class Flipper extends Component {
 													item={item}
 												/>
 											</div>
-											{/* <div className="back-side" style={{ overflow: 'hidden' }}>
-												<div></div>
-											</div> */}
 										</div>
 									)									
 								})}

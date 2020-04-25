@@ -17,6 +17,10 @@ const C =  {
 
     LANGUAGE_ADD:"LANGUAGE_ADD",
 
+    NEXT_PAGE: "NEXT_PAGE",
+    PREVIOUS_PAGE: "PREVIOUS_PAGE",
+    SCROLL_TO: "SCROLL_TO",
+
     STATE:"STATE",
 };
 const subdomen = global.subdomen||'deniz';
