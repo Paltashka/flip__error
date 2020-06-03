@@ -14,8 +14,6 @@ const Products = props => {
     tables,
     info} = props;
 
-// const {id:catid,name,pr} = item;      
-
 const getSortIndex = id=>{
   for (let i=0;i<categories.length;i++){
       if(categories[i].id===id){
@@ -41,6 +39,12 @@ items = Object.values(items);
 items = items
   .map(m=>({...m,sort_index:getSortIndex(m.id)}))
   .sort((a,b)=>a.sort_index-b.sort_index);
+
+  const table_id = global.table?global.table.toString():-1;
+  const isTable = useMemo(() => tables.some(s=>s.id.toString()==table_id), [tables, table_id]);
+ // console.log('isTable',isTable);
+  // const showButtons = (info&&info.online_order===true&&isTable===true)?``:'d-none';
+  const showButtons = '';
 
   return(
     <main className="menu-section tile-view-main">
@@ -76,7 +80,7 @@ items = items
                                                                 {description[lang] || description['en']}
                                                             </div>
                                                         </div>
-                                                        {/* <div className="col-auto cc-col ml-auto">
+                                                        <div className="col-auto cc-col ml-auto">
                                                             <div className={`cart-controls ${showButtons}`}>
                                                                 <button
                                                                     onDoubleClick={e=>{e.stopPropagation(); e.preventDefault()}}
@@ -90,7 +94,7 @@ items = items
                                                                     onClick={e=>plusMinus(id,-1,price,name[lang])}
                                                                     className={`cl-btn c-orange ct-minus s-x ${cart.products[id]&&cart.products[id].count>0?'':'hidden'}`}>-</button>
                                                             </div>
-                                                        </div> */}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -103,9 +107,6 @@ items = items
                     )
                 })
             }
-
-
-
         </div>
     </main>
 )

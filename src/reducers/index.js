@@ -6,6 +6,8 @@ import categories from "./categories";
 import info from "./info";
 import lang from "./lang";
 import currentPage from './currentPage';
+import order from './order';
+import tables from './tables';
 
 export default combineReducers({
     states,
@@ -13,5 +15,7 @@ export default combineReducers({
     categories,
     info,
     lang,
-    currentPage
+    currentPage,
+    order,
+    tables
 });

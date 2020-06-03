@@ -8,6 +8,7 @@ const SelectLanguageMenu = props =>{
     const [test, setTest] = useState(true);
     const lang = props.lang || {};
     const {info} = props;
+    let banner = info ? info.banner : undefined;
 
     useEffect(() => {
         if (banner) {
@@ -19,7 +20,6 @@ const SelectLanguageMenu = props =>{
         return <PageLoader />
     }
 
-    let banner = info ? info.banner : undefined;
     
     delete lang.en;
 

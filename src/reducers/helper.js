@@ -31,7 +31,7 @@ export const Status = (id,status,error='')=>({type:C.STATE, id, status, error});
 
 export const modify = (url, data,type,method,ID, toArray=false)=>async (dispatch,state)=>{
     // let status = state().states.filter(f=>f.id === ID).reduce((a,c)=>c,{});
-
+    console.log(data, 'data')
     dispatch(Status(ID,'processing'));
 
     let _form = {...data, _method:method};

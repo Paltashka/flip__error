@@ -15,7 +15,7 @@ const scrollTo = el => {
     })
 }
 const MenuNavigator = props => {
-    const { categories, lang, handleAnimation, tile, tileSwitcher} = props;
+    const { categories, lang, handleAnimation, tile, tileSwitcher, info, callWaitress} = props;
     const [currItem, setCurrItem] = useState(82);
     const categoriesID = categories.map(({ id }) => id);
     const ss = categories.map(m => `cat_${m.id}`);
@@ -108,9 +108,10 @@ const MenuNavigator = props => {
                                 </button>
                             </div>
                         </div>
-                        {/* <div className={`col text-right ${info.call_a_waiter !== true ? 'd-none' : ''}`}>
+                        {/* <div className={`col text-right ${info.call_a_waiter !== true ? 'd-none' : ''}`}> */}
+                        <div className="col text-right">
                             <button onClick={e => callWaitress()} className="clt-btn s-m c-orange call-btn">call waitress</button>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </div>
