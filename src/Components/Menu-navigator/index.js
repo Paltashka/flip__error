@@ -15,10 +15,10 @@ const scrollTo = el => {
     })
 }
 const MenuNavigator = props => {
-    const { name, prev, next } = props;
-    // const [currItem, setCurrItem] = useState(82);
-    // const categoriesID = categories.map(({ id }) => id);
-    // const ss = categories.map(m => `cat_${m.id}`);
+    const { categories, lang, handleAnimation, tile, tileSwitcher} = props;
+    const [currItem, setCurrItem] = useState(82);
+    const categoriesID = categories.map(({ id }) => id);
+    const ss = categories.map(m => `cat_${m.id}`);
 
     return (
         <section className="navigation" style={{ position: 'relative' }}>
@@ -27,12 +27,7 @@ const MenuNavigator = props => {
                 <div className="container">
                     <div className="row no-gutters align-items-center">
                         <div className="col">
-                            <div className="category-wrapper">
-                                <span className="subcategory-name">{prev}</span>
-                                <span className="category-name">{name}</span>
-                                <span className="subcategory-name">{next}</span>
-                            </div>
-                            {/* <div className="dropdown menu" id="scroll-nav">
+                            <div className="dropdown menu" id="scroll-nav">
                                 <a className="clt-link dropdown-toggle d-flex" data-default-text="Catalog" href="#"
                                     role="button" id="dropdownMenuLink" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -111,7 +106,7 @@ const MenuNavigator = props => {
                                             fill="currentColor" />
                                     </svg>
                                 </button>
-                            </div> */}
+                            </div>
                         </div>
                         {/* <div className={`col text-right ${info.call_a_waiter !== true ? 'd-none' : ''}`}>
                             <button onClick={e => callWaitress()} className="clt-btn s-m c-orange call-btn">call waitress</button>

@@ -7,12 +7,18 @@ const SelectLanguageMenu = props =>{
     const [prerolImg, setprerolImg] = useState(true);
     const [test, setTest] = useState(true);
     const lang = props.lang || {};
+    const {info} = props;
+
+    useEffect(() => {
+        if (banner) {
+            props.UpdateImage(info);
+        }
+    }, [banner]);
 
     if (lang.length === 0) {
         return <PageLoader />
     }
 
-    const {info} = props;
     let banner = info ? info.banner : undefined;
     
     delete lang.en;
@@ -23,23 +29,15 @@ const SelectLanguageMenu = props =>{
         menu.unshift({code: "en", name: "English"});
     }
 
-
-    // useEffect(() => {
-    //     if (banner) {
-    //         props.UpdateImage(info);
-    //     }
-    // }, [banner]);
-
-    // setTimeout( async () => {
-    //     await setprerolImg(false)
-    //     setTimeout(() => setTest(false),1000) 
-    //    },2500)
+    setTimeout( async () => {
+        await setprerolImg(false)
+        setTimeout(() => setTest(false),1000) 
+       },2500)
 
    return (
        <div className='welcome__inner'>
-           {/* <img style={{ opacity: prerolImg ? 1 : 0, display: test ? "block" : "none" }} src={info.welcome_screen} /> */}
-           {/* <div style={{ display: !test ? "block" : "none"}}> */}
-            <div>
+           <img style={{ opacity: prerolImg ? 1 : 0, display: test ? "block" : "none" }} src={info.welcome_screen} />
+           <div style={{ display: !test ? "block" : "none"}}>
                {menu.length > 0 && <h1>CHOOSE LANGUAGE</h1>}
                {menu.map(({code,name})=>{
                 return(

@@ -3,8 +3,7 @@ import {connect} from "react-redux";
 import {loadCategories} from "../../reducers/categories";
 import {loadProducts} from "../../reducers/products";
 import PageLoader from "../PageLoader";
-import TestBanner from '../../images/test-banner.png';
-import Flipper from '../Flipper';
+import {Link} from 'react-router-dom';
 
 const SelectCategoriesMenu = props => {
   const { categories, onCreate, info, products } = props;
@@ -18,10 +17,17 @@ const SelectCategoriesMenu = props => {
   }
 
   const lang = props.lang || 'en';
-  const banner = info.welcome_screen || TestBanner;
   
   return(
-		<Flipper lang={lang} info={info} banner={banner} categories={categories} products={products} />
+    <div className='welcome__inner'>
+    <h1>Choose a Category</h1>
+    <a key={0} href={`#/${lang}/${0}`}>ALL</a>
+    {categories.map(({ id, name })=>{
+        return(
+            <Link key={id} smooth to={`/${lang}/menu#cat_${id}`}>{name[lang] || name['en']}</Link>
+        )
+    })}
+</div>
   )
 }
 
