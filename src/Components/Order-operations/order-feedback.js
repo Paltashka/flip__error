@@ -1,7 +1,9 @@
 import React,{createRef} from 'react';
 
 const OrderFeedback = props=>{
-    const {orderFeedback, total} = props;
+    const {orderFeedback, total, order} = props;
+    let totalPrice = order.products ? order.grand_total : total;
+
     const ref = createRef();
     return(
         <main className="bill-section">
@@ -16,7 +18,7 @@ const OrderFeedback = props=>{
                                 TOTAL
                             </div>
                             <div className="col-auto total-num">
-                                <span className="total-price">{total||0}</span> AED
+                                <span className="total-price">{totalPrice||0}</span> AED
                             </div>
                         </div>
                     </div>

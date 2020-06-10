@@ -16,8 +16,6 @@ global.subdomen = getSubdomen();
 // global.subdomen = 'deniz';
 global.url = window.test_data_path ? window.test_data_path : `https://${global.subdomen}.sqrmenu.com/api/shop/v1/`;
 // global.url = `https://${global.subdomen}.sqrmenu.com/api/shop/v1/`;
-console.log(global.url)
-
 
 window.history.pushState({}, document.title, "/#");
 

@@ -1,7 +1,7 @@
 import React from "react";
 
 const OrderHeader = props=>{
-    const {info,goHome,orderState} = props;
+    const {info,goHome,orderState, callWaitress} = props;
     return(
         <section className="navigation">
             <div className="navigation-fix">
@@ -14,7 +14,7 @@ const OrderHeader = props=>{
                             </button>
                         </div>
                         <div className={`col-auto ml-auto ${info.call_a_waiter!==true?'d-none':''}`}>
-                            <button href="#" className="clt-btn s-m c-orange call-btn">call waitress</button>
+                            <button onClick={() => callWaitress()} href="#" className="clt-btn s-m c-orange call-btn">call a waiter</button>
                         </div>
                     </div>
                 </div>

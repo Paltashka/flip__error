@@ -46,6 +46,7 @@ function checkScroll(){
 
     if ( wPos > elPosTop ) {
         document.querySelector('.navigation-fix').classList.add("fixed");
+        document.querySelector('.tile-veiw--wrapper').classList.add("fixed");
     } else {
         document.querySelector('.navigation-fix').classList.remove("fixed");
     }
@@ -83,7 +84,7 @@ class MenuPage extends React.Component{
             tile:true,
             tiles:{},
             messageText:undefined,
-            table_id:global.table||14,
+            table_id:global.table||76,
             cart:{products:{},total:0},
             modalCartForTableIsOpen: false,
             orderMenu:false,
@@ -160,14 +161,17 @@ class MenuPage extends React.Component{
 
     closeModalCart = (save=false, note=undefined)=>{
         const {cart, table_id} = this.state;
+        const {order} = this.props.order;
+
         let products = Object.values(cart.products)
         this.setState({modalCartForTableIsOpen:false});
+
         if(save===true){
             this.setState({orderMenu:true,orderState:1});
             const {cart, table_id} = this.state;
             let products = Object.values(cart.products).map(({id,count:quantity})=>({product_id:parseInt(id),quantity})).filter(f=>f.quantity>0);
-            if(this.props.order.uuid){
-                this.props.UpdateOrder(this.props.order.uuid,products,table_id,note)
+            if(order){
+                this.props.UpdateOrder(order.uuid,{products,table_id,note})
             }else{
                 this.props.CreateOrder({products, table_id})
             }
@@ -176,7 +180,9 @@ class MenuPage extends React.Component{
 
     goHome = ()=>{
         let res =  {orderMenu:false};
-        if(this.state.orderState>1){
+        if (this.state.orderState === 1) {
+            res.cart = {products:{},total:0};
+        } else if(this.state.orderState>1) {
             res.orderState=0;
             res.cart = {products:{},total:0};
         }
@@ -243,7 +249,6 @@ class MenuPage extends React.Component{
             orderMenu
         } = this.state;
 
-
         return(
             <>
                 <div className={`wrapper fade-in ${modalCartForTableIsOpen===true?'modal-open':''}`}>
@@ -281,7 +286,11 @@ class MenuPage extends React.Component{
                                 orderFeedback={this.orderFeedback}
                                 cart={cart}
                                 plusMinus={this.plusMinus}
-                                goHome={this.goHome}/>
+                                goHome={this.goHome}
+                                callWaitress={this.callWaitress}
+                                order={this.props.order}
+                                lang={lang}
+                            />
                                 
                          </>
                     }
@@ -318,7 +327,8 @@ const mapMethodsToProps = {
     CallWaiter: callWaiter,
     CloseOrder: closeOrder,
     CreateOrder: createOrder,
-    CallBill: callBill
+    CallBill: callBill,
+    UpdateOrder: updateOrder
 };
 
 export default connect(mapStateToProps, mapMethodsToProps)(MenuPage);

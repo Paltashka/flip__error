@@ -1,8 +1,21 @@
 import React from 'react';
-
+import {connect} from 'react-redux';
 const BillRequest = props=>{
-    const {billRequest, cart, plusMinus} = props;
-    const products = Object.values(cart.products).filter(f=>f.count>0);
+    const {billRequest, cart, plusMinus, order, currency, lang} = props;
+    const products = order.products ? order.products : cart.products;
+    // let productsVisible = Object.values({...products}).filter(f=>f.count>0);
+    let productsVisible = Object.values({...products});
+    let total = order.products ? order.grand_total : cart.total;
+    if (order.products) {
+        productsVisible = productsVisible.map(product => {
+            return ({
+            name: product.product[0].name[lang],
+            price: product.order_price
+        })})
+    }
+    console.log(productsVisible)
+
+
     return(
         <main className="bill-section">
             <div className="container">
@@ -23,14 +36,14 @@ const BillRequest = props=>{
                         </address>
                         <div className="cart-list">
                             {
-                                products.map(({id, name, price, currency, count})=>{
+                                productsVisible.map(({id, name, price})=>{
                                     return(
                                         <div key={id} className="row no-gutters align-items-center">
                                             <div className="col prod-name">
                                                 {name}
                                             </div>
                                             <div className="col-3 prod-price">
-                                                <span className="price">{price*count}</span> {currency}
+                                                <span className="price">{price}</span> {currency}
                                             </div>
                                             <div className="col-auto d-none">
                                                 <button onClick={e=>plusMinus(id,0,price,name)} href="#" className="btn btn-link prod-delete"></button>
@@ -50,7 +63,7 @@ const BillRequest = props=>{
                                 TOTAL
                             </div>
                             <div className="col-auto total-num">
-                                <span className="total-price">{cart.total}</span> AED
+                                <span className="total-price">{total}</span> AED
                             </div>
                         </div>
                     </div>
@@ -62,4 +75,9 @@ const BillRequest = props=>{
         </main>
     )
 }
-export default BillRequest;
+
+const mapStateToProps = state => ({
+    currency: state.info.currency
+});
+
+export default connect(mapStateToProps, null)(BillRequest);

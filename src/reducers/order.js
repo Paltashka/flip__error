@@ -9,7 +9,9 @@ export default (state={}, action) => {
         case C.ORDER_UPDATE:
             return {
                 ...state,
-                ...action.data
+                ...action.data,
+                grand_total: state.order.grand_total + action.data.order.grand_total,
+                products: [...state.order.products, ...action.data.order.products]
             };
         case C.ORDER_CLOSE:
             return {};

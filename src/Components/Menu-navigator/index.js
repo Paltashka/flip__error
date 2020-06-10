@@ -47,7 +47,7 @@ const MenuNavigator = props => {
                                     >
                                         {categories.map(({ id, name }) => <li key={id}><a href={`cat_${id}`}>{name[lang] || name['en']}</a></li>)}
                                     </ScrollSpy>
-                                    <img className="ml-4" src={DropdownArrowIcon} aria-labelledby="dropdownMenuLink" />
+                                    <img className="ml-4 dropdown-triangle" src={DropdownArrowIcon} aria-labelledby="dropdownMenuLink" />
                                 </a>
                                 <div className="dropdown-menu" id="menu-list"
                                     aria-labelledby="dropdownMenuLink">
@@ -67,7 +67,7 @@ const MenuNavigator = props => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-auto">
+                        <div className="col-auto tile-veiw--wrapper">
                             <div className="tile-veiw">
                                 <button
                                     onClick={async() => {
@@ -109,9 +109,9 @@ const MenuNavigator = props => {
                             </div>
                         </div>
                         {/* <div className={`col text-right ${info.call_a_waiter !== true ? 'd-none' : ''}`}> */}
-                        <div className="col text-right">
+                        {/* <div className="col text-right">
                             <button onClick={e => callWaitress()} className="clt-btn s-m c-orange call-btn">call waitress</button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

@@ -23,17 +23,18 @@ const C =  {
 
     STATE:"STATE",
 };
-const subdomen = global.subdomen||'deniz';
-window.test_data_path='https://deniz.sqrmenu.com/api/shop/v1/';
+// const subdomen = global.subdomen||'deniz';
+const subdomen = global.subdomen||'test';
+// window.test_data_path='https://deniz.sqrmenu.com/api/shop/v1/';
+window.test_data_path='https://test.sqrmenu.com/api/shop/v1/';
+
 export const url = ()=>window.test_data_path?window.test_data_path:`https://${subdomen}.sqrmenu.com/api/shop/v1/`;
 export default C;
 export const Status = (id,status,error='')=>({type:C.STATE, id, status, error});
 
 export const modify = (url, data,type,method,ID, toArray=false)=>async (dispatch,state)=>{
     // let status = state().states.filter(f=>f.id === ID).reduce((a,c)=>c,{});
-    console.log(data, 'data')
     dispatch(Status(ID,'processing'));
-
     let _form = {...data, _method:method};
 
 
