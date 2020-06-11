@@ -40,11 +40,12 @@ items = items
   .map(m=>({...m,sort_index:getSortIndex(m.id)}))
   .sort((a,b)=>a.sort_index-b.sort_index);
 
-  const table_id = global.table?global.table.toString():-1;
+  const table_id = global.table;
   const isTable = useMemo(() => tables.some(s=>s.id.toString()==table_id), [tables, table_id]);
- // console.log('isTable',isTable);
-  // const showButtons = (info&&info.online_order===true&&isTable===true)?``:'d-none';
-  const showButtons = '';
+  
+//   const showButtons = (info&&info.online_order===true&&isTable===true)?``:'d-none';
+  const showButtons = table_id ?``:'d-none';
+//   const showButtons = '';
 
   return(
     <main className="menu-section tile-view-main">

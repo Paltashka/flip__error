@@ -13,8 +13,6 @@ const BillRequest = props=>{
             price: product.order_price
         })})
     }
-    console.log(productsVisible)
-
 
     return(
         <main className="bill-section">

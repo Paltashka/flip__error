@@ -19,6 +19,7 @@ global.url = window.test_data_path ? window.test_data_path : `https://${global.s
 
 window.history.pushState({}, document.title, "/#");
 
+
 // const url = new URL(`${global.url}views/add`);
 
 let headers = {

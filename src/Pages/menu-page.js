@@ -84,7 +84,7 @@ class MenuPage extends React.Component{
             tile:true,
             tiles:{},
             messageText:undefined,
-            table_id:global.table||76,
+            table_id:global.table,
             cart:{products:{},total:0},
             modalCartForTableIsOpen: false,
             orderMenu:false,
@@ -237,6 +237,8 @@ class MenuPage extends React.Component{
     render(){
         const {match, products, categories, info, tables } = this.props;
         let lang = match.params.lang || 'en';
+        // var pageUrl = '?' + 'table=76';
+        // window.history.pushState('', '', pageUrl);
 
         const {
             tile,
@@ -246,7 +248,8 @@ class MenuPage extends React.Component{
             modalCartForTableIsOpen,
             orderState,
             order,
-            orderMenu
+            orderMenu,
+            table_id
         } = this.state;
 
         return(
@@ -275,7 +278,7 @@ class MenuPage extends React.Component{
                                 tileSwitcher={this.tileSwitcher}
                                 plusMinus={this.plusMinus}
                                 lang={lang}/>
-                            <CartBlock cart={cart} openModalCart={this.openModalCart}/>
+                            {table_id && <CartBlock cart={cart} openModalCart={this.openModalCart}/>}
                          </>
                         :<>
                             <OrderOperations
