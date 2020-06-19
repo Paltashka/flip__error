@@ -237,9 +237,9 @@ class MenuPage extends React.Component{
     render(){
         const {match, products, categories, info, tables } = this.props;
         let lang = match.params.lang || 'en';
-        // var pageUrl = '?' + 'table=76';
-        // window.history.pushState('', '', pageUrl);
-
+        var pageUrl = '?' + 'table=76';
+        window.history.pushState('', '', pageUrl);
+        console.log(this.props.order, 'this.props.order')
         const {
             tile,
             tiles,

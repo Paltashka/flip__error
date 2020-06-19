@@ -7,6 +7,14 @@ export default (state={}, action) => {
                 ...action.data
             };
         case C.ORDER_UPDATE:
+            if (state.products) {
+                return {
+                    ...state,
+                    ...action.data,
+                    grand_total: state.grand_total + action.data.order.grand_total,
+                    products: [...state.products, ...action.data.order.products]
+                };
+            }
             return {
                 ...state,
                 ...action.data,
